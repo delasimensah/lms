@@ -5,7 +5,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/format";
+// import { formatPrice } from "@/lib/format";
 
 interface CourseEnrollButtonProps {
   price: number;
@@ -22,7 +22,7 @@ export const CourseEnrollButton = ({
     try {
       setIsLoading(true);
 
-      const response = await axios.post(`/api/courses/${courseId}/checkout`)
+      const response = await axios.post(`/api/courses/${courseId}/checkout`);
 
       window.location.assign(response.data.url);
     } catch {
@@ -30,7 +30,7 @@ export const CourseEnrollButton = ({
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Button
@@ -39,7 +39,7 @@ export const CourseEnrollButton = ({
       size="sm"
       className="w-full md:w-auto"
     >
-      Enroll for {formatPrice(price)}
+      Enroll for GH₵{Number(price).toFixed(2)}
     </Button>
-  )
-}
+  );
+};
