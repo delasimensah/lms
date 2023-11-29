@@ -9,10 +9,13 @@ const { Video } = new Mux(
   process.env.MUX_TOKEN_SECRET!,
 );
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { courseId: string } }
-) {
+type Params = {
+  params: {
+    courseId: string;
+  };
+};
+
+export async function DELETE(_: Request, { params }: Params) {
   try {
     const { userId } = auth();
 
@@ -29,9 +32,9 @@ export async function DELETE(
         chapters: {
           include: {
             muxData: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     if (!course) {
@@ -57,10 +60,7 @@ export async function DELETE(
   }
 }
 
-export async function PATCH(
-  req: Request,
-  { params }: { params: { courseId: string } }
-) {
+export async function PATCH(req: Request, { params }: Params) {
   try {
     const { userId } = auth();
     const { courseId } = params;
@@ -73,11 +73,11 @@ export async function PATCH(
     const course = await db.course.update({
       where: {
         id: courseId,
-        userId
+        userId,
       },
       data: {
         ...values,
-      }
+      },
     });
 
     return NextResponse.json(course);
