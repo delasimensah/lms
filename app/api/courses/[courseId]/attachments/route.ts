@@ -3,10 +3,13 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 
-export async function POST(
-  req: Request,
-  { params }: { params: { courseId: string } }
-) {
+type Params = {
+  params: {
+    courseId: string;
+  };
+};
+
+export async function POST(req: Request, { params }: Params) {
   try {
     const { userId } = auth();
     const { url } = await req.json();
@@ -19,7 +22,7 @@ export async function POST(
       where: {
         id: params.courseId,
         userId: userId,
-      }
+      },
     });
 
     if (!courseOwner) {
@@ -31,7 +34,7 @@ export async function POST(
         url,
         name: url.split("/").pop(),
         courseId: params.courseId,
-      }
+      },
     });
 
     return NextResponse.json(attachment);
