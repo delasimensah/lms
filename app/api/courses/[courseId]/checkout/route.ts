@@ -10,7 +10,7 @@ type Params = {
   };
 };
 
-export async function POST(req: Request, { params }: Params) {
+export async function POST(_: Request, { params }: Params) {
   try {
     const user = await currentUser();
 
