@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
@@ -8,16 +9,14 @@ import { CoursesList } from "@/components/courses-list";
 
 import { Categories } from "./_components/categories";
 
-interface SearchPageProps {
+type SearchPageProps = {
   searchParams: {
     title: string;
     categoryId: string;
-  }
+  };
 };
 
-const SearchPage = async ({
-  searchParams
-}: SearchPageProps) => {
+const SearchPage: FC<SearchPageProps> = async ({ searchParams }) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -26,8 +25,8 @@ const SearchPage = async ({
 
   const categories = await db.category.findMany({
     orderBy: {
-      name: "asc"
-    }
+      name: "asc",
+    },
   });
 
   const courses = await getCourses({
@@ -37,17 +36,17 @@ const SearchPage = async ({
 
   return (
     <>
-      <div className="px-6 pt-6 md:hidden md:mb-0 block">
+      <div className="block px-6 pt-6 md:mb-0 md:hidden">
         <SearchInput />
       </div>
-      <div className="p-6 space-y-4">
-        <Categories
-          items={categories}
-        />
+
+      <div className="space-y-4 p-6">
+        <Categories items={categories} />
+
         <CoursesList items={courses} />
       </div>
     </>
-   );
-}
- 
+  );
+};
+
 export default SearchPage;

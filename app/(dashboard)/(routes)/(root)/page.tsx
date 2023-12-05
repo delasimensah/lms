@@ -25,6 +25,7 @@ const Dashboard = async () => {
           label="In Progress"
           numberOfItems={coursesInProgress.length}
         />
+
         <InfoCard
           icon={CheckCircle}
           label="Completed"
@@ -32,6 +33,7 @@ const Dashboard = async () => {
           variant="success"
         />
       </div>
+
       <CoursesList items={[...coursesInProgress, ...completedCourses]} />
     </div>
   );
